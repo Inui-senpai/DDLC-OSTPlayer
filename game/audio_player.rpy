@@ -1,26 +1,16 @@
 
-# Determines Compact Mode or List Mode UIs
+# Определяет, будет ли включён Компактный режим или Режим списка
 default persistent.listui = False
-# Automatically reverts the music playing before the player launched.
+# Автоматически возвращает проигрываемую музыку перед открытием медиаплеера.
 default persistent.auto_restore_music = True
-# Add a fadein/out to the track similar to Poweramp or music players with one.
+# Добавляет к треку эффект проявления/затухания, как в PowerAMP или аналогичной программе.
 default persistent.fadein = False
 
 image readablePos = DynamicDisplayable(ost_info.music_pos)
 image readableDur = DynamicDisplayable(ost_info.music_dur)
 image titleName = DynamicDisplayable(ost_info.dynamic_title_text)
-image authorName = DynamicDisplayable(renpy.curry(ost_info.dynamic_author_text)(If(
-    renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187), 
-        "r6_android_song_author_text", 
-        "music_player_text")
-        )
-)  
-image albumName = DynamicDisplayable(renpy.curry(ost_info.dynamic_album_text)(If(
-        renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187), 
-        "r6_android_song_author_text", 
-        "music_player_text")
-    )
-)
+image authorName = DynamicDisplayable(ost_info.dynamic_author_text)
+image albumName = DynamicDisplayable(ost_info.dynamic_album_text)
 image coverArt = DynamicDisplayable(ost_info.refresh_cover_data) 
 
 screen new_music_room():
@@ -31,10 +21,10 @@ screen new_music_room():
 
     default bar_val = AdjustableAudioPositionValue()
 
-    use game_menu(_("OST Player")):
-        
+    use game_menu(_("OST-проигрыватель")):
+
         fixed at music_player_transition:
-            
+
             if not ost_info.get_current_soundtrack():
                 vbox:
                     if persistent.listui:
@@ -43,18 +33,18 @@ screen new_music_room():
                         xpos 0.3
                         ypos 0.4
 
-                    text "No music is currently playing.":
+                    text _("Ничего не играет."):
                         color "#000"
-                        outlines[]
+                        outlines []
                         size 24
 
                     hbox:
                         xalign 0.5
                         if not persistent.listui:
-                            textbutton "Music List":
+                            textbutton _("Список музыки"):
                                 action [Show("music_list_type"), With(Dissolve(0.25))]
-                                
-                        textbutton "Settings":
+
+                        textbutton _("Настройки"):
                             action [Show("music_settings"), With(Dissolve(0.25))]
 
             elif persistent.listui:
@@ -120,7 +110,7 @@ screen new_music_room():
                                 action [Function(ost_song_assign.refresh_list)]
 
                             null width 15
-                            
+
                             imagebutton:
                                 idle ConditionSwitch("preferences.get_volume(\"music_player_mixer\") == 0.0", 
                                     "mod_assets/music_player/volume.png", "True", 
@@ -144,14 +134,14 @@ screen new_music_room():
                             hbox:
                                 add "readablePos" 
                                 add "readableDur" xpos 550
-                
+
             else:
 
                 hbox:
                     xpos 0.06
                     yalign 0.25
                     spacing 10
-            
+
                     add "coverArt" at cover_art_resize(350)
 
                     vbox:
@@ -231,7 +221,7 @@ screen new_music_room():
                             yoffset 5
                             add "readablePos" 
                             add "readableDur" xpos 630
-                    
+
                     imagebutton:
                         idle ConditionSwitch("preferences.get_volume(\"music_player_mixer\") == 0.0", 
                             "mod_assets/music_player/volume.png", "True", 
@@ -272,24 +262,16 @@ screen new_music_room():
 
                                     vbox:
                                         xsize 770
-                                        if renpy.version_tuple == (6, 99, 12, 4, 2187) and renpy.android:
-                                            text "{b}[st.name]{/b}" style "r6_android_list_title_text"
-                                            text "[st.author]" style "r6_android_list_author_text"
-                                            text "[st.album]"  style "r6_android_list_author_text"
-                                        else:
-                                            text "{b}[st.name]{/b}" style "music_player_list_title_text"
-                                            text "[st.author]" style "music_player_list_author_text"
-                                            text "[st.album]"  style "music_player_list_author_text"
+                                        text "{b}[st.name]{/b}" style "music_player_list_title_text"
+                                        text "[st.author]" style "music_player_list_author_text"
+                                        text "[st.album]"  style "music_player_list_author_text"
                                     if st.byteTime:
                                         vbox:
                                             yalign 0.5
                                             xpos -20
-                                            if renpy.version_tuple == (6, 99, 12, 4, 2187) and renpy.android:
-                                                text ost_info.convert_time(st.byteTime) style "r6_android_list_author_text"
-                                            else:
-                                                text ost_info.convert_time(st.byteTime) style "music_player_list_author_text"
+                                            text ost_info.convert_time(st.byteTime) style "music_player_list_author_text"
 
-    text "DDLC OST-Player v[ostVersion]":
+    text "OST-проигрыватель DDLC, вер. [ostVersion]":
         xalign 1.0 yalign 1.0
         xoffset -10 yoffset -10
         style "main_menu_version"
@@ -301,24 +283,24 @@ screen new_music_room():
 
             python:
                 try:
-                    if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187):
-                        file(os.environ["ANDROID_PUBLIC"] + "/game/RPASongMetadata.json")
-                    else:
-                        renpy.file("RPASongMetadata.json")
+                    renpy.open_file("RPASongMetadata.json")
                     file_found = True
                 except: file_found = False
-            
+
             if not file_found:
                 imagebutton:
                     idle "mod_assets/music_player/osterror.png"
-                    action Show("dialog", message="{b}Warning{/b}\nThe RPA metadata file hasn't been generated.\nSongs in the {i}track{/i} folder won't be listed if you build your mod without it.\n Set {i}config.developer{/i} to {u}True{/u} in order to generate this file.",
+                    action Show("dialog", message=_p("""{b}ВНИМАНИЕ{/b}
+Файл метаданных в RPA-архиве не был сгенерирован.
+Перечень треков в папке {i}track{/i} не будет составлен, если вы соберёте свою модификацию без этого файла.
+Установите значение {u}True{/u} для переменной {i}config.developer{/i}, дабы сгенерировать этот файл."""),
                         ok_action=Hide("dialog"))
 
-    # Start the music playing on entry to the music room.
+    # Начать играть музыку при входе в музыкальный зал.
     on "replace" action [Function(ost_main.ost_start), Stop("music", fadeout=1.0)]
     on "show" action [Function(ost_main.ost_start), Stop("music", fadeout=1.0)]
 
-    # Restore the main menu music upon leaving.
+    # Восстанавливать музыку главного меню при выходе.
     on "hide" action [If(persistent.auto_restore_music,
         [Stop("music_player", fadeout=1.0), SetMute("music", False), Play("music", ost_main.prevTrack, fadein=1.0)],
         SetMute("music", True))]
@@ -351,7 +333,7 @@ screen music_list_type(type=None):
             hbox:
                 ypos 0.005
                 xalign 0.52 
-                text "Music List"
+                text _("Список музыки")
 
             hbox:
                 ypos 0.005
@@ -372,19 +354,19 @@ screen music_list_type(type=None):
                     has vbox
 
                     if type is None:
-                        textbutton "All Songs":
+                        textbutton _("Все треки"):
                             action [Hide("music_list_type"), Show("music_list")]
 
-                        textbutton "Artist":
+                        textbutton _("Исполнитель"):
                             action [Show("music_list_type", type="artist")]
 
-                        textbutton "Album Artist":
+                        textbutton _("Составитель альбома"):
                             action [Show("music_list_type", type="albumartist")]
 
-                        textbutton "Composer":
+                        textbutton _("Композитор"):
                             action [Show("music_list_type", type="composer")]
 
-                        textbutton "Genre":
+                        textbutton _("Жанр"):
                             action [Show("music_list_type", type="genre")]
 
                     else:
@@ -403,15 +385,15 @@ screen music_list_type(type=None):
                                 elif type == "genre":
                                     if st.genre not in temp_list:
                                         temp_list.append(st.genre)
-                            
+
                             temp_list = sorted(temp_list)
 
                         for st in temp_list:
                             textbutton "[st]":
                                 action [Hide("music_list_type"), Show("music_list", type=type, arg=st)]
-                        
+
     on "hide" action With(Dissolve(0.25))
-            
+
 screen music_list(type=None, arg=None):
 
     style_prefix "music_window"
@@ -441,7 +423,7 @@ screen music_list(type=None, arg=None):
                         new_soundtrack_list.append(st)
                 else:
                     new_soundtrack_list.append(st)
-                    
+
             new_soundtrack_list = sorted(new_soundtrack_list, key=lambda new_soundtrack_list: new_soundtrack_list.name)
 
         frame:
@@ -454,7 +436,7 @@ screen music_list(type=None, arg=None):
             hbox:
                 ypos 0.005
                 xalign 0.52 
-                text "Music List"
+                text _("Список музыки")
 
             hbox:
                 ypos 0.005
@@ -498,7 +480,7 @@ screen music_settings():
             hbox:
                 ypos 0.005
                 xalign 0.52 
-                text "Settings" style "music_window_text"
+                text _("Настройки") style "music_window_text"
 
             hbox:
                 ypos 0.005
@@ -517,27 +499,29 @@ screen music_settings():
                     mousewheel True
                     draggable True
                     has vbox
-                    
-                    label "UI"
+
+                    label _("Интерфейс")
                     vbox:
-                        textbutton "Compact Mode":
+                        textbutton _("Компактный режим"):
                             style "radio_button" 
                             action [Hide("music_list_type"), Hide("music_list"), Hide("music_info"),
                                 ToggleField(persistent, "listui", False, True)]
 
-                    label "Player"
+                    label _("Проигрыватель")
                     vbox:
-                        textbutton "Restore Original Music On Exit":
+                        textbutton _("Возвращать музыку при выходе"):
                             style "radio_button" 
                             action InvertSelected(ToggleField(persistent, "auto_restore_music", False, True))
-                        
-                        textbutton "Song Fade In/Out":
+
+                        textbutton _("Эффект проявления/затухания"):
                             style "radio_button" 
                             action InvertSelected(ToggleField(persistent, "fadein", False, True))
-                            
-                    textbutton "About DDLC OST-Player":
+
+                    textbutton _("Об OST-проигрывателе DDLC"):
                         text_style "navigation_button_text" 
-                        action Show("dialog", message="DDLC OST-Player by GanstaKingofSA.\nCopyright © 2020-2022 GanstaKingofSA.", 
+                        action Show("dialog", message=_p("""OST-проигрыватель DDLC от Азариэль Дель Кармена (bronya_rand).
+Авторские права © 2020-наст. вр. Азариэль Дель Кармен (bronya_rand).
+Перевод на русский: Amanda Watson, специально для RG Smoking Room."""), 
                             ok_action=Hide("dialog"))
 
     on "hide" action With(Dissolve(0.25))   
@@ -558,7 +542,7 @@ screen music_info():
             hbox:
                 ypos 0.005
                 xalign 0.52 
-                text "Music Info"
+                text _("О треке")
 
             hbox:
                 ypos 0.005
@@ -584,18 +568,11 @@ screen music_info():
                         genre = ost_info.get_genre()
                         sideloaded = ost_info.get_sideload()
                         comment = ost_info.get_description() or None
-                    
-                    if renpy.android and renpy.version_tuple == (6, 99, 12, 4, 2187):
-                        text "{u}Album Artist{/u}: [albumartist]" style "r6_android_music_player_info_text"
-                        text "{u}Composer{/u}: [composer]" style "r6_android_music_player_info_text"
-                        text "{u}Genre{/u}: [genre]" style "r6_android_music_player_info_text"
-                        text "{u}Sideloaded{/u}: [sideloaded]" style "r6_android_music_player_info_text"
-                        text "{u}Comment{/u}: [comment]" style "r6_android_music_player_info_text"
-                    else:
-                        text "{u}Album Artist{/u}: [albumartist]" style "music_player_info_text"
-                        text "{u}Composer{/u}: [composer]" style "music_player_info_text"
-                        text "{u}Genre{/u}: [genre]" style "music_player_info_text"
-                        text "{u}Sideloaded{/u}: [sideloaded]" style "music_player_info_text"
-                        text "{u}Comment{/u}: [comment]" style "music_player_info_text"
+
+                    text _("{u}Составитель альбома{/u}: [albumartist]") style "music_player_info_text"
+                    text _("{u}Композитор{/u}: [composer]") style "music_player_info_text"
+                    text _("{u}Жанр{/u}: [genre]") style "music_player_info_text"
+                    text _("{u}Предзагрузка{/u}: [sideloaded]") style "music_player_info_text"
+                    text _("{u}Комментарий{/u}: [comment]") style "music_player_info_text"
 
     on "hide" action With(Dissolve(0.25))    

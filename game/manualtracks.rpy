@@ -1,45 +1,45 @@
 
 init python:    
-    ## Manual Soundtracks Options
-    #     name - The songs' name [REQUIRED]
-    #     author - The songs' artist [REQUIRED]
-    #     path - The path to the song [REQUIRED]
-    #     album - The songs' album
-    #     albumartist - The song' album artist
-    #     composer - The songs' composer (person who made the music piece)
-    #     genre - The songs' genre
-    #     description - The song' description/comment
-    #     cover_art - The path to the songs' cover art or 'False'
-    #                 (without quotes) if this song has no cover art [REQUIRED]
-    #     unlocked = 'True' (without quotes) for unlocked or 
-    #                renpy.seen_audio("path/to/song") for True/False 
-    #                determination
+    ## Параметры ручного определения треков
+    #     name - Название трека [ОБЯЗАТЕЛЬНО]
+    #     author - Исполнитель трека [ОБЯЗАТЕЛЬНО]
+    #     path - Путь к треку [ОБЯЗАТЕЛЬНО]
+    #     album - Альбом трека
+    #     albumartist - Составитель этого альбома
+    #     composer - Композитор трека (человек, который написал музыку к нему)
+    #     genre - Жанр трека
+    #     description - Описание/комментарий трека
+    #     cover_art - Путь к обложке трека или 'False'
+    #                 (без кавычек), если у этого трека нет обложки [ОБЯЗАТЕЛЬНО]
+    #     unlocked = 'True' (без кавычек) для мгновенной разблокировки или
+    #                условие renpy.seen_audio("путь/к/треку.формат"), от которого
+    #                и будет зависеть разблокировка
 
     your_reality = soundtrack(
-        name = "Your reality",
-        author = "Monika",
+        name = __("Твоя реальность"),
+        author = __("Моника"),
         path = "bgm/credits.ogg",
-        description = "I made mistakes, hurt you, hurt my friends. All I can do is hope you all forgive me.",
+        description = __("Я натворила делов, сделала тебе больно, сделала больно своим друзьям. Я могу лишь надеяться на то, что вы все простите меня."),
         cover_art = False
     )     
     manualDefineList.append(your_reality)
-    
+
     Wake_Up_Unchanged = soundtrack(
-        name = "Unchanged",
+        name = __("Неизменный"),
         path = "mod_assets/music_player/sample/Unchanged.ogg",
         author = "PabloLuaxerc#1719",
-        description = "Sad soundtrack",
+        description = __("Грустный саундтрек"),
         cover_art = "mod_assets/music_player/sample/cover.png"
     )
     manualDefineList.append(Wake_Up_Unchanged)
 
-    ## Example
+    ## Пример
 
     # poem_panic = soundtrack(
-    #     name = "Poem Panic",
+    #     name = __("Стихотворный замес"),
     #     path = "bgm/example.ogg",
-    #     author = "Dan Salvato",
-    #     description = "Example",
+    #     author = __("Дэн Салвато"),
+    #     description = __("Пример"),
     #     unlocked = renpy.seen_audio("bgm/example.ogg")
     # )
     # manualDefineList.append(poem_panic)
