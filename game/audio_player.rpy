@@ -521,7 +521,9 @@ screen music_settings():
                         text_style "navigation_button_text" 
                         action Show("dialog", message=_p("""OST-проигрыватель DDLC от Азариэль Дель Кармена (bronya_rand).
 Авторские права © 2020-наст. вр. Азариэль Дель Кармен (bronya_rand).
-Перевод на русский: Amanda Watson, специально для RG Smoking Room."""), 
+Перевод на русский (RG Smoking Room):
+Amanda Watson – текстовая и скриптовая составляющие
+Inui-senpai – графическая составляющая"""), 
                             ok_action=Hide("dialog"))
 
     on "hide" action With(Dissolve(0.25))   

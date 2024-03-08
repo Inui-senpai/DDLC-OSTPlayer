@@ -1,93 +1,90 @@
-# DDLC OST Player
+# OST-проигрыватель DDLC
 
-A heavily revamped version of Nikso's Soundtrack Player for DDLC.
+Сильно переработанная версия проигрывателя саундтреков DDLC от Nikso.
 
-[Download DDLC OST-Player Here!](https://github.com/GanstaKingofSA/DDLC-OSTPlayer/releases/latest)
+[Скачать OST-проигрыватель DDLC можно здесь!](https://github.com/GanstaKingofSA/DDLC-OSTPlayer/releases/latest)
 
 <p align="center">
-   <img src=".github/assets/OSTPlayerLogo.png" alt="OST Player Logo" width=240x> 
+   <img src=".github/assets/OSTPlayerLogo.png" alt="Логотип OST-проигрывателя" width=240x> 
 </p>
 
-**DISCLAIMER:** This is not affiliated nor endorsed by Team Salvato or Nikso. The Scattered Stars <u>logo</u> in `Wake Up Unchanged` is not free to use, but is only allowed in this build as a display to the soundtrack player. If you plan to use the OST Player, remove this song in your final build.
+**ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ:** Данный проект не связан и не поддерживается Team Salvato или Nikso. <u>Логотип</u> модификации «Разрозненные звёзды», используемый для песни «Проснуться неизменным», не является свободным для использования, но разрешён для использования в этой сборке только для отображения в медиаплеере. Если вы планируете использовать этот OST-проигрыватель, удалите эту песню из финальной сборки своей модификации.
 
-## What is DDLC OST Player?
+## Что такое OST-проигрыватель DDLC?
 
-This allows the user to play the mods' soundtrack alongside a players' own music outside the main story.
+Данный проект даёт возможность пользователю слушать саундтрек модификации и его собственную музыку вне основного сюжета.
 
-<u>Screenshots:</u> [Compact Mode (Default)](.github/assets/screenshot0001.png) • [List Mode](.github/assets/screenshot0002.png)
+<u>Скриншоты:</u> [Компактный режим (по умолчанию)](.github/assets/screenshot0001.png) • [Режим перечня](.github/assets/screenshot0002.png)
 
-> All songs featured above are owned by the developer and are not included in DDLC OST Player. (Shoo UMG, SME, Rooster Teeth)
+> Все песни, демонстрируемые на скриншотах, принадлежат разработчику и не включены в OST-проигрыватель DDLC. (кыш отсюда, UMG, SME, Rooster Teeth)
 
-## Features
+## Особенности
 
-1. Ability to play MP3, OGG, WAV and OPUS files with metadata!
-   > Some players will export music files differently than normal. Make sure your tracks are exported properly using your music player or Audacity.
-2. Improved music player aesthetic.
-3. Dynamic title, artist titles and cover art scaling.
-4. Sideload songs from your playlist to be played with the mod's tracks.
-5. RPA/APK playback and metadata support!
-6. Improved fonts for foreign languages\*.
-   > \* - The fonts in DDLC OST-Player will not cover all languages or require additional tweaking in order to work for your given language. Riffic-Bold will have to be downloaded separately to comply with the FontSpring license and replace DDLC's own Riffic-Bold font.
-7. Android Support! (Ren'Py 7 Recommended)
+1. Возможность воспроизведения файлов MP3, OGG, WAV и OPUS с метаданными!
+   > Некоторые проигрыватели экспортируют аудиозаписи не так, как обычно. Убедитесь, что ваши треки экспортированы корректно, используя свой медиаплеер или Audacity.
+2. Улучшенная эстетика медиаплеера.
+3. Динамическое масштабирование названий треков, имён исполнителей и обложек.
+4. Подгрузка треков из своего плейлиста для дальнейшего их воспроизведения вместе с треками модификации.
+5. Воспроизведение из RPA/APK и поддержка метаданных!
+6. Улучшенные шрифты для иностранных языков\*.
+   > \* - Шрифты, используемые в OST-проигрывателе DDLC, не охватывают все языки или требуют дополнительных корректировок для работы на вашем языке.
+7. Поддержка Android!
 
-## Install Steps
+## Процедура установки
 
-> This assumes you already have a copy of DDLC with the mod template installed over it.
+> Предполагается, что у вас уже есть копия DDLC с установленным мод-шаблоном.
 
-- For Ren'Py 6, refer to the [Ren'Py 6 installation file](README_Ren'Py6.txt).
-- For Ren'Py 7 and later, refer to the [Ren'Py 7-8 installation file](README_Ren'Py7-8.txt).
+- Если вы используете Ren'Py 8 или новее, читайте [руководство по установке на Ren'Py 8.x](README_Ren'Py8.txt).
 
-## FAQ
+## ЧаВо
 
-- Q. Can I still define songs the old way?
+- В. Могу ли я по-прежнему определять песни старым способом?
 
-  A. Yes you can with some caviats.
+  О. Да, но с некоторыми оговорками:
 
-  1.  `priority` is no longer a required argurment.
-  2.  Manually defined songs require the following to be added after you fill out it's details.
+  1.  `priority` больше не является обязательным аргументом.
+  2.  После заполнения информации о треке, добавленном вручную, необходимо добавить следующее:
       ```py
       ost_song_assign.manualList.append(Wake_Up_Unchanged)
       ```
-      > Change `Wake_Up_Unchanged` to your song variable.
-      > Using `manualDefineList.append` still works, however it is recommended to use the above over it.
+      > Измените `Wake_Up_Unchanged` на переменную своего трека.
+      > Использование `manualDefineList.append` по-прежнему работает, но рекомендуется использовать вышеописанный способ.
 
-  See _manualtracks.rpy_ for a example or _audio_code.rpy_ for what can be defined.
+  Смотрите пример в _manualtracks.rpy_ или _audio\_code.rpy_, дабы узнать, что можно определить.
 
-- Q. Why is `Riffic-Bold` not included in DDLC OST Player?
+- В. Как мне добавить метаданные?
 
-  A. Riffic-Bold is not included in DDLC OST-Player due to licensing issues with Fontspring. In order to install Riffic-Bold you will need to download it yourself as a _Desktop license_ and add it to your project (It's free, not paid). See **Install Steps** on how to do so for your Ren'Py version.
+  О. Вы можете добавить метаданные к песне с помощью таких медиаплееров, как MusicBee, MusicBrainz Picard, либо средствами самой ОС.
 
-- Q. How do I add metadata info?
+  - Для Windows: Нажмите Правой кнопкой мыши по своей песне, выберите Свойства -> Подробно и заполните все пустые поля, какие сможете.
+  - Для MusicBee: Нажмите Правой кнопкой мыши по своей песне в проигрывателе, выберите _Редактировать_ и отредактируйте всю желаемую информацию, затем нажмите _Применить_ и _ОК_.
+  - Для MusicBrainz Picard: Добавьте свою песню в Picard, выберите её, нажмите Правой кнопкой мыши по прямоугольнику с тремя столбцами, выберите _Добавить новый тег_, выберите желаемые теги по типу _Название_, _Исполнитель_, _Комментарий_, _Альбом_ и т.д. В нижней части должно быть пустое поле, дважды щёлкните по нему и напишите нужную информацию, затем нажмите _Сохранить_ и на _Сохранить_ рядом с _Информацией_.
 
-  A. You can add metadata to your song by using either a music player like MusicBee, MusicBrainz Picard or from your OS itself.
+- В. Зачем ты сделал это?
 
-  - For Windows: Right-click your song, Select Properties -> Details, and fill the blank boxes you can.
-  - For MusicBee: Right-Click your song within the player, select _Edit_ and edit away the info you want, then click _Apply_ then _OK_.
-  - For MusicBrainz Picard: Add your song to Picard, select it, right-click the rectangle box that has 3 columns, select _Add New Tag_, select the tags you want to add like _Title_, _Artist_, _Comment_, _Album_, etc. There should be a blank box in the box area below, double-click it and edit away the info you want to add, then click _Save_ and press the _Save_ button near _Info_.
+  О. Потому что мне было скучно и хотелось, чтобы в DDLC звучали песни из RWBY и отображались их обложки. (ибо _если звёзды зажигают - значит, это кому-нибудь нужно :P_)
 
-- Q. Why is Ren'Py 7 Recommended for Android?
+## Авторы
 
-  A. Ren'Py 6 has funky code in Android and requires patches to work properly. While you can use DDLC OST-Player on Ren'Py 6, your mileage can vary depending on new code source.
+- Nikso - Оригинальный разработчик
+- Sam Kujo#9403 - Оригинальный дизайн и бета-тестер
+- Staryxz#3613 - Бета-тестер оригинала
+- PabloLuaxerc#1719 - Исполнитель песни _Проснуться неизменным_
+- Том Ротхаммель - Код стилей Ren'Py SDK и отзывы
+- Том Уолрот - Код Tinytag
+- RyzekNoavek#0624 - Код перематываемого прогресса воспроизведения
+- khaase (Pixabay) - Иконка обновления (до выхода версии 2.0)
+- eugenialcala (Pixabay) - Иконка повтора (до выхода версии 2.0)
+- raphaelsilva (Pixabay) - Иконка перемешивания (до выхода версии 2.0)
+- Josy_Dom_Alexis (Pixabay) - Иконка громкости (до выхода версии 2.0)
+- Google - Семейство шрифтов Noto Sans (Теги автора/описания) и иконки (версия 2.0+)
+- Discord-сервер по Ren'Py - отзывы по Ren'Py Universal Player, благодаря которым OST-проигрыватель DDLC был доведён до ума
+- Вайсс Шнии - Поддержка (Вайсс, наконец-то! Кто-то тоже её почитает! :D)
 
-- Q. Why did you do this?
+## Перевод на русский
+- Amanda Watson - текстовая и скриптовая составляющие
+- Inui-senpai - графическая составляющая
 
-  A. Cause I was bored and wanted to see RWBY songs play within DDLC and see song covers displayed. (Yang _You had to 'Yang' it didn't you? :P_)
+Авторские права © 2020-настоящее время Азариэль Дель Кармен (bronya_rand). Все права защищены.
 
-## Credits
-
-- Nikso - Original Developer
-- Sam Kujo#9403 - Original Design and Beta Tester
-- Staryxz#3613 - Original Beta Tester
-- PabloLuaxerc#1719 - Artist of _Wake Up Unchanged_
-- Tom Rothamel - Ren'Py SDK Style Code, Ren'Py `loader.py`/`main.py` Code and Feedback
-- Tom Wallroth - Tinytag Code
-- RyzekNoavek#0624 - Adjustable Play Bar Code
-- khaase (Pixabay) - Refresh Icon (Prior to Version 2.0)
-- eugenialcala (Pixabay) - Replay Icon (Prior to Version 2.0)
-- raphaelsilva (Pixabay) - Shuffle Icon (Prior to Version 2.0)
-- Josy_Dom_Alexis (Pixabay) - Volume Icon (Prior to Version 2.0)
-- Google - Noto Sans SC Font (Author/Description Tag) and Icons (Version 2.0+)
-- Ren'Py Discord - Feedback on Ren'Py Universal Player Feats Now In DDLC OST-Player
-- Weiss Schnee - Support (Weiss Finally! Some recognition! :D)
-
-Copyright © 2020-2022 Azariel Del Carmen (GanstaKingofSA). All rights reserved.
+Часть шрифтов и оптимизация для кроссплатформенности позаимствованы из русификатора от Энтузиасты Team.
